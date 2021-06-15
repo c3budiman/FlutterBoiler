@@ -4,9 +4,9 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -22,9 +22,9 @@ jobs:
       - run: flutter pub get
       # - run: flutter test
       # - run: flutter build apk
-      - run: cd ./app && flutter build apk  --release
-      - name: upload artifacts
-        uses: actions/upload-artifact@master
+      - run: flutter build apk --split-per-abi
+      - name: Create a Release APK
+        uses: ncipollo/release-action@v1
         with:
-          name: flutterBoiler
-          path: app/build/app/outputs
+          artifacts: "build/app/outputs/apk/debug/*.apk"
+          token: ${{ secrets.RELEASETOKEN }}
