@@ -3,8 +3,11 @@ import 'package:flutterboiler/Pages/Home/Screen/HomeScreen.dart';
 import 'package:flutterboiler/Pages/Login/Screen/LoginScreen.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterboiler/Utils/NotificationUtils.dart';
 
 void main() {
+  NotificationUtils.initNotif();
+
   // biar appbarnya bening / transparent color
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
