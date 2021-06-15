@@ -5,6 +5,8 @@ name: Build
 on:
   push:
     branches: [master]
+    tags:
+    - '*'
   pull_request:
     branches: [master]
 
@@ -24,8 +26,7 @@ jobs:
       # - run: flutter build apk
       - run: flutter build apk --split-per-abi
       - name: Create a Release APK
-        uses: skx/github-action-publish-binaries@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          args: "build/app/outputs/flutter-apk/app-release.apk"
+          artifacts: "build/app/outputs/flutter-apk/*.apk"
+          token: ${{ secrets.RELEASETOKEN }}
