@@ -1,0 +1,7 @@
+{
+  "Import Colors": {
+    "prefix": "importCo",
+    "body": "import 'package:flutterboiler/Configs/Colors.dart';",
+    "description": "Import custom color"
+  }
+}

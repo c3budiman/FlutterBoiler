@@ -25,10 +25,7 @@ dependencies:
   awesome_notifications: ^0.0.6+9
   pin_code_fields: ^7.2.0
 
-assets:
-  - assets/images/vector.png
-  - assets/images/categorytop.png
-  - assets/images/otp.gif
+
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +33,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/images/vector.png
+  - assets/images/categorytop.png
+  - assets/images/otp.gif
+  - assets/images/person.png
+  - assets/images/c3budiman.jpeg
