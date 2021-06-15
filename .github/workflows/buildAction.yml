@@ -22,3 +22,8 @@ jobs:
       - run: flutter pub get
       # - run: flutter test
       - run: flutter build apk
+      - uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
+        with:
+          args: 'build/app/outputs/flutter-apk/app-release.apk'
