@@ -24,7 +24,8 @@ jobs:
       # - run: flutter build apk
       - run: flutter build apk --split-per-abi
       - name: Create a Release APK
-        uses: ncipollo/release-action@v1
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
         with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-          token: ${{ secrets.RELEASETOKEN }}
+          args: "build/app/outputs/flutter-apk/app-release.apk"
