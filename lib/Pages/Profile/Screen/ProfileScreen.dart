@@ -4,14 +4,14 @@ import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen();
+class ProfileScreen extends StatefulWidget {
+  ProfileScreen();
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
@@ -31,11 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       endDrawer: Drawer(),
       bottomNavigationBar: BottomNavbarPrimary(
-        activeBar: 0,
+        activeBar: 2,
         onTap: (index) {
           NavbarLogic.navbarNavigation(
             context: context,
-            currentIndex: 0,
+            currentIndex: 2,
             gotoIndex: index,
           );
         },

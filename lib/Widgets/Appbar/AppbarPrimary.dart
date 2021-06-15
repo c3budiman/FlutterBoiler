@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/Configs/Images.dart';
 import 'package:flutterboiler/Widgets/Appbar/Widgets/OfflineMessage.dart';
 
 class AppbarPrimary extends StatefulWidget {
-  const AppbarPrimary({required this.title});
+  const AppbarPrimary({
+    required this.title,
+    required this.backgroundColor,
+    required this.fontColor,
+  });
   final String title;
+  final Color backgroundColor;
+  final Color fontColor;
 
   @override
   _AppbarPrimaryState createState() => _AppbarPrimaryState();
@@ -20,11 +26,25 @@ class _AppbarPrimaryState extends State<AppbarPrimary> {
     super.initState();
     subscription = Connectivity().onConnectivityChanged.listen(
       (ConnectivityResult result) {
-        setState(() {
-          connected = (result != ConnectivityResult.none);
-        });
+        if (result != ConnectivityResult.none) {
+          setState(() {
+            connected = true;
+          });
+        } else {
+          setState(() {
+            connected = false;
+          });
+        }
       },
     );
+    checkCon();
+  }
+
+  checkCon() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    setState(() {
+      connected = (connectivityResult != ConnectivityResult.none);
+    });
   }
 
   @override
@@ -39,16 +59,16 @@ class _AppbarPrimaryState extends State<AppbarPrimary> {
   Widget build(BuildContext context) {
     return AppBar(
       actions: <Widget>[],
-      backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
+      backgroundColor: widget.backgroundColor,
       brightness: Brightness.dark,
-      // elevation: 60.0,
-      elevation: 0,
+      elevation: 50.0,
+      // elevation: 0,
       leading: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/c3budiman.jpeg',
+              Images.logo,
               height: 35,
             ),
           ],
@@ -57,11 +77,11 @@ class _AppbarPrimaryState extends State<AppbarPrimary> {
       centerTitle: false,
       titleSpacing: 0.0,
       title: Transform(
-        transform: Matrix4.translationValues(-5.0, 0.0, 0.0),
+        transform: Matrix4.translationValues(-5, 0.0, 0.0),
         child: Text(
           widget.title,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.whiteTheme,
+            color: widget.fontColor,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),

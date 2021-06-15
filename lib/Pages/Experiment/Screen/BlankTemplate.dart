@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
-import 'package:flutterboiler/Utils/PrintUtils.dart';
+import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
+import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
+import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
 
 class BlankTemplate extends StatefulWidget {
   BlankTemplate();
@@ -13,19 +15,30 @@ class _BlankTemplateState extends State<BlankTemplate> {
   @override
   void initState() {
     super.initState();
-    PrintUtils.printGreen("tes green");
-    PrintUtils.printMagenta("tes magenta");
-    PrintUtils.printWarning("tes yellow");
-    PrintUtils.printWhite("tes white");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.whiteTheme,
-      appBar: AppBar(
-        title: const Text('AppBar Demo'),
-        actions: <Widget>[],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: AppbarPrimary(
+          title: "Home",
+          fontColor: Theme.of(context).colorScheme.whiteTheme,
+          backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
+        ),
+      ),
+      endDrawer: Drawer(),
+      bottomNavigationBar: BottomNavbarPrimary(
+        activeBar: 0,
+        onTap: (index) {
+          NavbarLogic.navbarNavigation(
+            context: context,
+            currentIndex: 0,
+            gotoIndex: index,
+          );
+        },
       ),
     );
   }

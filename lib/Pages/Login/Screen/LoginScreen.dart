@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/Configs/Images.dart';
 import 'package:flutterboiler/Pages/Home/Screen/HomeScreen.dart';
 import 'package:flutterboiler/Pages/Login/Screen/LoginBackground.dart';
 import 'package:flutterboiler/Widgets/Buttons/ButtonPrimary.dart';
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 left: 0,
                 right: 0,
                 child: Image.asset(
-                  'assets/images/c3budiman.jpeg',
+                  Images.logo,
                   height: 140,
                 ),
               ),

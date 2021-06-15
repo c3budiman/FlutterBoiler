@@ -4,14 +4,14 @@ import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen();
+class ExamplesScreen extends StatefulWidget {
+  ExamplesScreen();
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ExamplesScreenState createState() => _ExamplesScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ExamplesScreenState extends State<ExamplesScreen> {
   @override
   void initState() {
     super.initState();
@@ -24,18 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
         child: AppbarPrimary(
-          title: "Home",
+          title: "Example",
           fontColor: Theme.of(context).colorScheme.whiteTheme,
           backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
         ),
       ),
       endDrawer: Drawer(),
       bottomNavigationBar: BottomNavbarPrimary(
-        activeBar: 0,
+        activeBar: 1,
         onTap: (index) {
           NavbarLogic.navbarNavigation(
             context: context,
-            currentIndex: 0,
+            currentIndex: 1,
             gotoIndex: index,
           );
         },
