@@ -1,0 +1,38 @@
+name: flutterboiler
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  percent_indicator: ^3.0.1
+  dio: ^4.0.0
+  path_provider: ^2.0.2
+  shared_preferences: ^2.0.6
+  email_validator: ^2.0.1
+  photo_view: ^0.11.1
+  connectivity: ^3.0.6
+  web_socket_channel: ^2.1.0
+  awesome_notifications: ^0.0.6+9
+  pin_code_fields: ^7.2.0
+
+assets:
+  - assets/images/vector.png
+  - assets/images/categorytop.png
+  - assets/images/otp.gif
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

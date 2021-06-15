@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/Utils/PrintUtils.dart';
+
+class BlankTemplate extends StatefulWidget {
+  BlankTemplate();
+
+  @override
+  _BlankTemplateState createState() => _BlankTemplateState();
+}
+
+class _BlankTemplateState extends State<BlankTemplate> {
+  @override
+  void initState() {
+    super.initState();
+    PrintUtils.printGreen("tes green");
+    PrintUtils.printMagenta("tes magenta");
+    PrintUtils.printWarning("tes yellow");
+    PrintUtils.printWhite("tes white");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.whiteTheme,
+      appBar: AppBar(
+        title: const Text('AppBar Demo'),
+        actions: <Widget>[],
+      ),
+    );
+  }
+}
