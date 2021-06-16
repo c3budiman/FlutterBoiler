@@ -1,10 +1,10 @@
 # flutterboiler
 
-A boiler for Flutter project.
+[![CodeFactor](https://www.codefactor.io/repository/github/c3budiman/flutterboiler/badge)](https://www.codefactor.io/repository/github/c3budiman/flutterboiler)
+
+A boiler template for Flutter project.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
 
 A few resources to get you started:
 
