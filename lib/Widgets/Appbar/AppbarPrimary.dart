@@ -8,10 +8,12 @@ class AppbarPrimary extends StatefulWidget {
     required this.title,
     required this.backgroundColor,
     required this.fontColor,
+    Function? this.connectionChange,
   });
   final String title;
   final Color backgroundColor;
   final Color fontColor;
+  final connectionChange;
 
   @override
   _AppbarPrimaryState createState() => _AppbarPrimaryState();
@@ -30,10 +32,17 @@ class _AppbarPrimaryState extends State<AppbarPrimary> {
           setState(() {
             connected = true;
           });
+          if (widget.connectionChange != null) {
+            widget.connectionChange(true);
+          }
         } else {
+          print('masuk false');
           setState(() {
             connected = false;
           });
+          if (widget.connectionChange != null) {
+            widget.connectionChange(false);
+          }
         }
       },
     );

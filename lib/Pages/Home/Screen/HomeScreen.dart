@@ -5,7 +5,6 @@ import 'package:flutterboiler/Utils/PrintUtils.dart';
 import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
-import 'package:flutterboiler/Widgets/Dialogs/ErrorDialog.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,8 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
   doinit() async {
     try {
       var result = await Fetcher.getData(
-        'https://60c8c3513fcd810017036b8c.mockapi.io/Blog',
-        {'page': 1, 'limit': 10},
+        context: context,
+        uri: 'https://60c8c3513fcd810017036b8c.mockapi.io/Blog',
+        params: {'page': 1, 'limit': 10},
+        silent: true,
       );
       setState(() {
         blogsArticle = result;
@@ -35,12 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // PrintUtils.printWarning(result.toString());
     } catch (e) {
       PrintUtils.printError(e.toString());
-      showDialog(
-        context: context,
-        builder: (_) {
-          return ErrorDialog(title: "Failed Fetch", message: e.toString());
-        },
-      );
     }
   }
 
@@ -54,6 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
           title: "Home",
           fontColor: Theme.of(context).colorScheme.whiteTheme,
           backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
+          connectionChange: (val) {
+            if (val) {
+              print('back online');
+              doinit();
+            }
+          },
         ),
       ),
       endDrawer: Drawer(),
