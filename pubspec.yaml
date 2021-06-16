@@ -24,8 +24,7 @@ dependencies:
   web_socket_channel: ^2.1.0
   awesome_notifications: ^0.0.6+9
   pin_code_fields: ^7.2.0
-
-
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
