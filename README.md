@@ -1,6 +1,7 @@
 # flutterboiler
 
 [![CodeFactor](https://www.codefactor.io/repository/github/c3budiman/flutterboiler/badge)](https://www.codefactor.io/repository/github/c3budiman/flutterboiler)
+[![Build](https://github.com/c3budiman/FlutterBoiler/actions/workflows/testing.yml/badge.svg)](https://github.com/c3budiman/FlutterBoiler/actions/workflows/testing.yml)
 
 A boiler template for Flutter project.
 
