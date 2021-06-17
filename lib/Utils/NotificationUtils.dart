@@ -7,36 +7,50 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 class NotificationUtils {
+  static var subscriptionNotif;
+
   static subsNotif() async {
-    try {
-      var idnotif = 0;
-      var subscriptionNotif = WebSocketChannel.connect(
-        // Uri.parse(Config.baseNotif + iduser),
+    if (subscriptionNotif == null) {
+      subscriptionNotif = WebSocketChannel.connect(
+        // Uri.parse(Config.baseNotif + userId),
         Uri.parse(Urls.baseNotif),
       );
-      subscriptionNotif.stream.listen(
-        (message) {
-          try {
-            PrintUtils.printWarning('>>>Received Message from ws : $message');
-            idnotif++;
-            var messagefix = json.decode(message);
-            if (messagefix['message'] != null) {
-              AwesomeNotifications().createNotification(
-                content: NotificationContent(
-                  id: idnotif,
-                  channelKey: 'basic_channel',
-                  title: 'Notifikasi',
-                  body: messagefix['message'],
-                ),
-              );
+      PrintUtils.printGreen("Conection Open for notif main");
+      int idnotif = 0;
+
+      if (subscriptionNotif != null) {
+        subscriptionNotif.stream.listen(
+          (message) {
+            try {
+              idnotif++;
+              PrintUtils.printWarning("NOTIF in main>>> " + message);
+              var messagefix = json.decode(message);
+              if (messagefix['message'] != null) {
+                AwesomeNotifications().createNotification(
+                  content: NotificationContent(
+                    id: idnotif,
+                    channelKey: 'basic_channel',
+                    title: 'Notifikasi',
+                    body: messagefix['message'],
+                  ),
+                );
+              }
+            } catch (e) {
+              print(e);
             }
-          } catch (e) {
-            print(e);
-          }
-        },
-      );
+          },
+        );
+      }
+    }
+  }
+
+  static closeConnection() {
+    PrintUtils.printError('Connection Closed for notif main');
+    try {
+      subscriptionNotif.sink.close();
+      subscriptionNotif = null;
     } catch (e) {
-      print(e);
+      PrintUtils.printError(e.toString());
     }
   }
 

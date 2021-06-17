@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
 import 'package:flutterboiler/Configs/Images.dart';
-import 'package:flutterboiler/Pages/Home/Screen/HomeScreen.dart';
 import 'package:flutterboiler/Pages/Login/Screen/LoginBackground.dart';
+import 'package:flutterboiler/Utils/NavigatorCustom.dart';
 import 'package:flutterboiler/Widgets/Buttons/ButtonPrimary.dart';
 import 'package:flutterboiler/Widgets/Forms/InputEmail.dart';
 import 'package:flutterboiler/Widgets/Forms/InputPassword.dart';
@@ -30,8 +30,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   doLogin() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    await NavigatorCustom.forwardNavigate(
+      context: context,
+      from: '/login',
+      to: '/home',
+    );
   }
 
   @override

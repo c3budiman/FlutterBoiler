@@ -17,31 +17,15 @@ class Fetcher {
     bool silent = true,
   }) async {
     try {
-      var konek = await cekKoneksi();
-      if (konek) {
-        Response response;
-        var dio = Dio();
-        response = await dio.get(
-          uri,
-          queryParameters: params,
-        );
-        PrintUtils.printGreen("sukses fetch >>" + uri);
-        PrintUtils.printGreen("with param >>" + params.toString());
-        return response.data;
-      } else {
-        if (context != null && !silent) {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return ErrorDialog(
-                title: "Failed Fetch",
-                message: "Anda sedang offline!",
-              );
-            },
-          );
-        }
-        throw ("Anda sedang offline!");
-      }
+      Response response;
+      var dio = Dio();
+      response = await dio.get(
+        uri,
+        queryParameters: params,
+      );
+      PrintUtils.printGreen("sukses fetch >>" + uri);
+      PrintUtils.printGreen("with param >>" + params.toString());
+      return response.data;
     } on DioError catch (e) {
       PrintUtils.printError("uri >>" + uri);
       PrintUtils.printError("params >>" + params.toString());

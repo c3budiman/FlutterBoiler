@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutterboiler/Pages/Examples/Screen/ExamplesScreen.dart';
-import 'package:flutterboiler/Pages/Home/Screen/HomeScreen.dart';
-import 'package:flutterboiler/Pages/Profile/Screen/ProfileScreen.dart';
+import 'package:flutterboiler/Utils/NavigatorCustom.dart';
 
 ///
 ///This Function class for handling the bottom navbar navigation
@@ -17,30 +14,12 @@ class NavbarLogic {
     required context,
     required int currentIndex,
     required int gotoIndex,
-  }) {
-    if (gotoIndex == 0 && currentIndex != 0) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(),
-        ),
-      );
-    }
-    if (gotoIndex == 1 && currentIndex != 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ExamplesScreen(),
-        ),
-      );
-    }
-    if (gotoIndex == 2 && currentIndex != 2) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProfileScreen(),
-        ),
-      );
-    }
+  }) async {
+    var navigator = ['/home', '/example', '/profile'];
+    await NavigatorCustom.forwardNavigate(
+      context: context,
+      from: navigator[currentIndex],
+      to: navigator[gotoIndex],
+    );
   }
 }

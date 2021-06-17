@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/Pages/Home/Screen/HomeScreen.dart';
 import 'package:flutterboiler/Pages/Login/Screen/LoginScreen.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterboiler/Utils/NotificationUtils.dart';
+import 'package:flutterboiler/routes.dart';
 
 void main() {
   NotificationUtils.initNotif();
@@ -29,10 +29,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Theme.of(context).colorScheme.whiteTheme,
       ),
       home: LoginScreen(),
-      routes: {
-        "/login": (BuildContext context) => LoginScreen(),
-        "/home": (BuildContext context) => HomeScreen(),
-      },
+      routes: Routes.mainRoutes,
     );
   }
 }
