@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutterboiler/Configs/Images.dart';
 import 'package:flutterboiler/Widgets/Appbar/Widgets/OfflineMessage.dart';
 
 class AppbarPrimary extends StatefulWidget {
@@ -72,27 +71,28 @@ class _AppbarPrimaryState extends State<AppbarPrimary> {
       brightness: Brightness.dark,
       elevation: 50.0,
       // elevation: 0,
-      leading: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              Images.logo,
-              height: 35,
-            ),
-          ],
-        ),
-      ),
+      // leading: Container(
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Image.asset(
+      //         Images.logo,
+      //         height: 35,
+      //       ),
+      //     ],
+      //   ),
+      // ),
       centerTitle: false,
       titleSpacing: 0.0,
       title: Transform(
-        transform: Matrix4.translationValues(-5, 0.0, 0.0),
+        transform: Matrix4.translationValues(20, 0.0, 0.0),
         child: Text(
           widget.title,
           style: TextStyle(
             color: widget.fontColor,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 30,
+            fontFamily: 'Billabong',
           ),
         ),
       ),

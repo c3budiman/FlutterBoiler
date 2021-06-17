@@ -1,13 +1,10 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
 import 'package:flutterboiler/Configs/Images.dart';
-import 'package:flutterboiler/Configs/Urls.dart';
 import 'package:flutterboiler/Pages/Login/Logic/LoginLogic.dart';
 import 'package:flutterboiler/Pages/Login/Screen/LoginBackground.dart';
-import 'package:flutterboiler/Utils/Fetcher.dart';
 import 'package:flutterboiler/Utils/NavigatorCustom.dart';
 import 'package:flutterboiler/Widgets/Buttons/ButtonPrimary.dart';
 import 'package:flutterboiler/Widgets/Dialogs/ErrorDialog.dart';
@@ -15,7 +12,6 @@ import 'package:flutterboiler/Widgets/Dialogs/SuccessDialog.dart';
 import 'package:flutterboiler/Widgets/Forms/InputEmail.dart';
 import 'package:flutterboiler/Widgets/Forms/InputPassword.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:crypto/crypto.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen();

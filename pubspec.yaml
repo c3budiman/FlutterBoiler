@@ -27,6 +27,7 @@ dependencies:
   shimmer: ^2.0.0
   flutter_spinkit: ^5.0.0
   crypto: ^3.0.1
+  
 
 dev_dependencies:
   flutter_test:
@@ -40,3 +41,7 @@ flutter:
   - assets/images/otp.gif
   - assets/images/person.png
   - assets/images/c3budiman.jpeg
+  fonts:
+    - family: Billabong
+      fonts:
+        - asset: assets/fonts/Billabong.ttf
