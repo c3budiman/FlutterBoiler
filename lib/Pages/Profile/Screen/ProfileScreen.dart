@@ -3,6 +3,7 @@ import 'package:flutterboiler/Configs/Colors.dart';
 import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
+import 'package:flutterboiler/Widgets/Drawer/DrawerPrimary.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen();
@@ -29,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
         ),
       ),
-      endDrawer: Drawer(),
+      endDrawer: DrawerPrimary(),
       bottomNavigationBar: BottomNavbarPrimary(
         activeBar: 2,
         onTap: (index) {

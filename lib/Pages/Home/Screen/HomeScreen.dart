@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/Pages/Home/Widgets/BlogItems.dart';
 import 'package:flutterboiler/Utils/Fetcher.dart';
 import 'package:flutterboiler/Utils/PrintUtils.dart';
 import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
+import 'package:flutterboiler/Widgets/Drawer/DrawerPrimary.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,13 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
       var result = await Fetcher.getData(
         context: context,
         uri: 'https://60c8c3513fcd810017036b8c.mockapi.io/Blog',
-        params: {'page': 1, 'limit': 10},
+        params: {'page': 1, 'limit': 5},
         silent: true,
       );
       setState(() {
         blogsArticle = result;
       });
-      // PrintUtils.printWarning(result.toString());
+      PrintUtils.printWarning(result.toString());
     } catch (e) {
       PrintUtils.printError(e.toString());
     }
@@ -57,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      endDrawer: Drawer(),
+      endDrawer: DrawerPrimary(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(
@@ -91,9 +93,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 visible: blogsArticle.isNotEmpty,
                 child: ListView.builder(
                   shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: ScrollPhysics(),
                   itemCount: blogsArticle.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Text(blogsArticle[index]['name']);
+                    return BlogItems(
+                      avatar: blogsArticle[index]['avatar'],
+                      name: blogsArticle[index]['name'],
+                      pic: blogsArticle[index]['img'],
+                      desc: blogsArticle[index]['desc'],
+                    );
                   },
                 ),
               ),

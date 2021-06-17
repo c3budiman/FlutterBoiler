@@ -3,6 +3,7 @@ import 'package:flutterboiler/Configs/Colors.dart';
 import 'package:flutterboiler/Widgets/Appbar/AppbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/BottomNavbarPrimary.dart';
 import 'package:flutterboiler/Widgets/BottomNavbar/Logic/NavbarLogic.dart';
+import 'package:flutterboiler/Widgets/Drawer/DrawerPrimary.dart';
 
 class BlankTemplate extends StatefulWidget {
   BlankTemplate();
@@ -29,7 +30,7 @@ class _BlankTemplateState extends State<BlankTemplate> {
           backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
         ),
       ),
-      endDrawer: Drawer(),
+      endDrawer: DrawerPrimary(),
       bottomNavigationBar: BottomNavbarPrimary(
         activeBar: 0,
         onTap: (index) {

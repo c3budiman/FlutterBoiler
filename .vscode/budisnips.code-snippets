@@ -3,5 +3,15 @@
     "prefix": "importCo",
     "body": "import 'package:flutterboiler/Configs/Colors.dart';",
     "description": "Import custom color"
+  },
+  "Use Colors": {
+    "prefix": "colorh",
+    "body": "Theme.of(context).colorScheme.",
+    "description": "Using the custom color"
+  },
+  "Print Error": {
+    "prefix": "printe",
+    "body": "PrintUtils.printError(e.toString());",
+    "description": "Print Error"
   }
 }
