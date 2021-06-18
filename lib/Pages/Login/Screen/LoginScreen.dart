@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterboiler/Configs/Colors.dart';
@@ -37,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   doLogin() async {
     // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    // context, MaterialPageRoute(builder: (context) => HomeScreen()));
     setState(
       () {
         loading = true;

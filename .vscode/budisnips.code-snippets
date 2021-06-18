@@ -13,5 +13,21 @@
     "prefix": "printe",
     "body": "PrintUtils.printError(e.toString());",
     "description": "Print Error"
+  },
+  "Import Navigators": {
+    "prefix": "importna",
+    "body": "import 'package:flutterboiler/Utils/NavigatorCustom.dart';",
+    "description": "Import navigator"
+  },
+  "Navigator Custom": {
+    "prefix": "navigateme",
+    "body": [
+      "await NavigatorCustom.forwardNavigate(",
+      "  context: context,",
+      "  from: '/${1:name}',",
+      "  to: '/${2:name}',",
+      ");",
+    ],
+    "description": "Navigator custom"
   }
 }
