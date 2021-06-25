@@ -2,6 +2,7 @@ import 'package:flutterboiler/pages/login/logic/login_logic.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/configs/images.dart';
+import 'package:flutterboiler/utils/navigator_custom.dart';
 import 'package:flutterboiler/utils/print_utils.dart';
 import 'package:flutterboiler/widgets/drawer/widgets/drawer_items.dart';
 
@@ -14,7 +15,11 @@ class DrawerPrimary extends StatefulWidget {
 
 class _DrawerPrimaryState extends State<DrawerPrimary> {
   doLogout() {
-    Navigator.of(context).pop();
+    NavigatorCustom.forwardNavigateReplacement(
+      context: context,
+      from: 'home',
+      to: 'login',
+    );
   }
 
   @override
@@ -108,6 +113,7 @@ class _DrawerPrimaryState extends State<DrawerPrimary> {
                   ),
                   child: InkWell(
                     onTap: () {
+                      Navigator.pop(context);
                       doLogout();
                     },
                     child: Align(

@@ -20,7 +20,7 @@ class AppbarPrimary extends StatefulWidget {
 
 class _AppbarPrimaryState extends State<AppbarPrimary> {
   var subscription;
-  bool connected = false;
+  bool connected = true;
 
   @override
   void initState() {

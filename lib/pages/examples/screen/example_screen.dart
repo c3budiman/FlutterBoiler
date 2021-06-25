@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutterboiler/utils/navigator_custom.dart';
+import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:flutterboiler/widgets/appbar/appbar_primary.dart';
 import 'package:flutterboiler/widgets/drawer/drawer_primary.dart';
 
@@ -39,6 +40,12 @@ class _ExamplesScreenState extends State<ExamplesScreen> {
           ),
         ),
         endDrawer: DrawerPrimary(),
+        onEndDrawerChanged: (val) {
+          if (val)
+            UIProvider.instance.navbarHide();
+          else
+            UIProvider.instance.navbarShow();
+        },
       ),
     );
   }

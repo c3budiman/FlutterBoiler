@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // );
     // print(response);
 
-    await NavigatorCustom.forwardNavigate(
+    await NavigatorCustom.forwardNavigateReplacement(
       context: context,
       from: 'login',
       to: 'home',

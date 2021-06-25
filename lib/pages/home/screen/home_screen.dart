@@ -4,6 +4,7 @@ import 'package:flutterboiler/pages/home/widgets/blog_items.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutterboiler/utils/fetcher.dart';
 import 'package:flutterboiler/utils/print_utils.dart';
+import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:flutterboiler/widgets/appbar/appbar_primary.dart';
 import 'package:flutterboiler/widgets/drawer/drawer_primary.dart';
 import 'package:shimmer/shimmer.dart';
@@ -114,65 +115,80 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       endDrawer: DrawerPrimary(),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        controller: _controller,
-        child: Container(
-          margin: EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Visibility(
-                visible: loadinginit,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Shimmer.fromColors(
-                      baseColor: Colors.grey,
-                      highlightColor: Colors.white,
-                      child: BlogItems(
-                        avatar: '',
-                        name: '',
-                        pic: '',
-                        desc: '',
+      onEndDrawerChanged: (val) {
+        if (val)
+          UIProvider.instance.navbarHide();
+        else
+          UIProvider.instance.navbarShow();
+      },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            blogsArticle = [];
+            page = 1;
+          });
+          doinit();
+        },
+        child: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          controller: _controller,
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: loadinginit,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey,
+                        highlightColor: Colors.white,
+                        child: BlogItems(
+                          avatar: '',
+                          name: '',
+                          pic: '',
+                          desc: '',
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Visibility(
+                  visible: !loadinginit,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: ScrollPhysics(),
+                    itemCount: blogsArticle.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return BlogItems(
+                        avatar: blogsArticle[index]['avatar'],
+                        name: blogsArticle[index]['name'],
+                        pic: blogsArticle[index]['img'],
+                        desc: blogsArticle[index]['desc'],
+                      );
+                    },
+                  ),
+                ),
+                Visibility(
+                  visible: loadingmore,
+                  child: Column(
+                    children: [
+                      SpinKitCircle(
+                        color: Theme.of(context).colorScheme.blueOldTheme,
+                        size: 30.0,
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 ),
-              ),
-              Visibility(
-                visible: !loadinginit,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  physics: ScrollPhysics(),
-                  itemCount: blogsArticle.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return BlogItems(
-                      avatar: blogsArticle[index]['avatar'],
-                      name: blogsArticle[index]['name'],
-                      pic: blogsArticle[index]['img'],
-                      desc: blogsArticle[index]['desc'],
-                    );
-                  },
-                ),
-              ),
-              Visibility(
-                visible: loadingmore,
-                child: Column(
-                  children: [
-                    SpinKitCircle(
-                      color: Theme.of(context).colorScheme.blueOldTheme,
-                      size: 30.0,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

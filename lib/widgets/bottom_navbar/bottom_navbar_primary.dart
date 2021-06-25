@@ -3,6 +3,8 @@ import 'package:flutterboiler/pages/examples/screen/example_screen.dart';
 import 'package:flutterboiler/pages/home/screen/home_screen.dart';
 import 'package:flutterboiler/pages/profile/screen/profile_screen.dart';
 import 'package:flutterboiler/configs/colors.dart';
+import 'package:flutterboiler/utils/provider/ui_provider.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBarPrimary extends StatefulWidget {
   final int currentIndexes;
@@ -25,52 +27,54 @@ class BottomNavBarPrimaryState extends State<BottomNavBarPrimary> {
 
   @override
   Widget build(BuildContext context) {
+    final uiProvider = context.watch<UIProvider>();
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Column(
-              children: [
-                //Page View
-                Expanded(
-                  child: PageView(
-                    controller: _pageController,
-                    physics: NeverScrollableScrollPhysics(),
-                    onPageChanged: (index) {
-                      FocusScope.of(context).unfocus();
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                    children: [
-                      HomeScreen(),
-                      ExamplesScreen(),
-                      ProfileScreen(),
-                    ],
-                  ),
-                ),
-
-                Material(
-                  shape: Border(top: BorderSide(width: 0.1)),
-                  color: Colors.white,
-                  child: SizedBox(
-                    height: 60,
-                    child: Row(
-                      children: [
-                        _buildIconButton(Icons.home, "Home", 0),
-                        _buildIconButton(Icons.airplane_ticket, "Examples", 1),
-                        _buildIconButton(Icons.person, "Profil", 2),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+      body: Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Column(
+          children: [
+            //Page View
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                physics: NeverScrollableScrollPhysics(),
+                onPageChanged: (index) {
+                  FocusScope.of(context).unfocus();
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                children: [
+                  HomeScreen(),
+                  ExamplesScreen(),
+                  ProfileScreen(),
+                ],
+              ),
             ),
-          ),
-        ],
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 50),
+              child: uiProvider.showNavbar
+                  ? Material(
+                      shape: Border(top: BorderSide(width: 0.1)),
+                      color: Colors.white,
+                      child: SizedBox(
+                        height: 60,
+                        child: Row(
+                          children: [
+                            _buildIconButton(Icons.home, "Home", 0),
+                            _buildIconButton(
+                                Icons.airplane_ticket, "Examples", 1),
+                            _buildIconButton(Icons.person, "Profil", 2),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ),
+          ],
+        ),
       ),
     );
   }
