@@ -37,7 +37,6 @@ class Fetcher {
             context: context,
             builder: (_) {
               return ErrorDialog(
-                title: "Failed get",
                 message: e.response!.data.toString(),
               );
             },
@@ -52,7 +51,6 @@ class Fetcher {
             context: context,
             builder: (_) {
               return ErrorDialog(
-                title: "Failed get",
                 message: e.message.toString(),
               );
             },
@@ -91,7 +89,6 @@ class Fetcher {
             context: context,
             builder: (_) {
               return ErrorDialog(
-                title: "Failed post",
                 message: e.response!.data.toString(),
               );
             },
@@ -106,7 +103,6 @@ class Fetcher {
             context: context,
             builder: (_) {
               return ErrorDialog(
-                title: "Failed post",
                 message: e.message.toString(),
               );
             },

@@ -45,7 +45,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
         builder: (_) {
           return SuccessDialog(
-            title: "Sukses",
             message: response['info'],
           );
         },
@@ -63,7 +62,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
         builder: (_) {
           return ErrorDialog(
-            title: "Error",
             message: response['info'],
           );
         },

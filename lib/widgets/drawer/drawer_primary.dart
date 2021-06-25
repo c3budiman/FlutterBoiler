@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterboiler/configs/images.dart';
 import 'package:flutterboiler/utils/navigator_custom.dart';
 import 'package:flutterboiler/utils/print_utils.dart';
+import 'package:flutterboiler/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutterboiler/widgets/drawer/widgets/drawer_items.dart';
 
 class DrawerPrimary extends StatefulWidget {
@@ -113,8 +114,23 @@ class _DrawerPrimaryState extends State<DrawerPrimary> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      Navigator.pop(context);
-                      doLogout();
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return ConfirmationDialog(
+                            message:
+                                "Are you sure you want to logout from the application?",
+                          );
+                        },
+                      ).then(
+                        (value) async {
+                          if (value) {
+                            Navigator.pop(context);
+                            doLogout();
+                          }
+                        },
+                      );
                     },
                     child: Align(
                       alignment: Alignment.center,

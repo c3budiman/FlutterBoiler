@@ -56,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
     //     context: context,
     //     builder: (_) {
     //       return SuccessDialog(
-    //         title: "Sukses",
     //         message: response['info'],
     //       );
     //     },
@@ -74,7 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
     //     context: context,
     //     builder: (_) {
     //       return ErrorDialog(
-    //         title: "Error",
     //         message: response['info'],
     //       );
     //     },

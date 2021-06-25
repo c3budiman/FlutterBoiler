@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutterboiler/configs/colors.dart';
 
 class ErrorDialog extends StatefulWidget {
-  final String title, message;
+  final String message;
 
-  const ErrorDialog({required this.title, required this.message});
+  const ErrorDialog({required this.message});
   @override
   _ErrorDialogState createState() => _ErrorDialogState();
 }
@@ -12,6 +13,7 @@ class _ErrorDialogState extends State<ErrorDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.blueOldTheme,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
       content: Container(
@@ -26,6 +28,9 @@ class _ErrorDialogState extends State<ErrorDialog> {
             Text(
               widget.message,
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
             SizedBox(
               height: 10,
