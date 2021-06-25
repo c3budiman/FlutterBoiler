@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutterboiler/Utils/PrintUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/Widgets/Dialogs/ErrorDialog.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:flutterboiler/utils/print_utils.dart';
+import 'package:flutterboiler/widgets/dialogs/error_dialog.dart';
 
 class Fetcher {
   static cekKoneksi() async {

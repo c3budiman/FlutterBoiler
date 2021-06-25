@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/Pages/Login/Screen/LoginScreen.dart';
-import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterboiler/Utils/NotificationUtils.dart';
 import 'package:flutterboiler/routes.dart';
+import 'package:flutterboiler/utils/notification_utils.dart';
 
 void main() {
   NotificationUtils.initNotif();
-
   // biar appbarnya bening / transparent color
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -22,14 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Boiler',
+      title: 'Flutter Template',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         canvasColor: Theme.of(context).colorScheme.whiteTheme,
       ),
-      home: LoginScreen(),
-      routes: Routes.mainRoutes,
+      initialRoute: "login",
+      onGenerateRoute: generateRoutes,
     );
   }
 }
