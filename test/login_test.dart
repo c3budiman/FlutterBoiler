@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/pages/login/screen/login_screen.dart';
+import 'package:flutterboiler/Pages/Login/Screen/LoginScreen.dart';
 
 void main() {
   testWidgets(
