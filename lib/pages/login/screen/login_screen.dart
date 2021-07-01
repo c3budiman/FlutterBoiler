@@ -7,6 +7,8 @@ import 'package:flutterboiler/configs/images.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutterboiler/utils/navigator_custom.dart';
 import 'package:flutterboiler/widgets/buttons/button_primary.dart';
+import 'package:flutterboiler/widgets/dialogs/error_dialog.dart';
+import 'package:flutterboiler/widgets/dialogs/success_dialog.dart';
 import 'package:flutterboiler/widgets/forms/input_email.dart';
 import 'package:flutterboiler/widgets/forms/input_password.dart';
 
@@ -29,7 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    LoginLogic.checkLogin(context);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      LoginLogic.checkLogin(context);
+    });
   }
 
   doLogin() async {
@@ -39,45 +43,38 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
 
-    // var response = await LoginLogic.doLogin(
-    //   email: email,
-    //   password: password,
-    // );
-    // print(response);
-
-    await NavigatorCustom.forwardNavigateReplacement(
-      context: context,
-      from: 'login',
-      to: 'home',
+    var response = await LoginLogic.doLogin(
+      email: email,
+      password: password,
     );
 
-    // if (response['code'] == 0) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (_) {
-    //       return SuccessDialog(
-    //         message: response['info'],
-    //       );
-    //     },
-    //   ).then(
-    //     (value) async {
-    //       await NavigatorCustom.forwardNavigate(
-    //         context: context,
-    //         from: 'login',
-    //         to: 'home',
-    //       );
-    //     },
-    //   );
-    // } else {
-    //   showDialog(
-    //     context: context,
-    //     builder: (_) {
-    //       return ErrorDialog(
-    //         message: response['info'],
-    //       );
-    //     },
-    //   );
-    // }
+    if (response['code'] == 0) {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return SuccessDialog(
+            message: response['info'],
+          );
+        },
+      ).then(
+        (value) async {
+          await NavigatorCustom.forwardNavigateReplacement(
+            context: context,
+            from: 'login',
+            to: 'home',
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return ErrorDialog(
+            message: response['info'],
+          );
+        },
+      );
+    }
 
     if (mounted) {
       setState(

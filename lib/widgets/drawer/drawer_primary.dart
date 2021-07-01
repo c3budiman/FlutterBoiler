@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterboiler/configs/images.dart';
 import 'package:flutterboiler/utils/navigator_custom.dart';
 import 'package:flutterboiler/utils/print_utils.dart';
+import 'package:flutterboiler/utils/provider/auth_provider.dart';
 import 'package:flutterboiler/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutterboiler/widgets/drawer/widgets/drawer_items.dart';
 
@@ -15,14 +16,6 @@ class DrawerPrimary extends StatefulWidget {
 }
 
 class _DrawerPrimaryState extends State<DrawerPrimary> {
-  doLogout() {
-    NavigatorCustom.forwardNavigateReplacement(
-      context: context,
-      from: 'home',
-      to: 'login',
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -126,8 +119,13 @@ class _DrawerPrimaryState extends State<DrawerPrimary> {
                       ).then(
                         (value) async {
                           if (value) {
+                            await AuthProvider.instance.logOut();
                             Navigator.pop(context);
-                            doLogout();
+                            NavigatorCustom.forwardNavigateRemoveUntil(
+                              context: context,
+                              to: 'login',
+                              from: 'home',
+                            );
                           }
                         },
                       );

@@ -53,6 +53,7 @@ class BottomNavBarPrimaryState extends State<BottomNavBarPrimary> {
                 ],
               ),
             ),
+
             AnimatedSwitcher(
               duration: Duration(milliseconds: 50),
               child: uiProvider.showNavbar

@@ -29,4 +29,22 @@ class NavigatorCustom {
       PrintUtils.printWhite("wont navigate because from and to same.");
     }
   }
+
+  static forwardNavigateRemoveUntil({
+    required context,
+    required from,
+    required to,
+    arguments,
+  }) async {
+    if (from != to) {
+      PrintUtils.printWhite("Navigating replacement from : $from, to : $to");
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        to,
+        (route) => false,
+        arguments: arguments,
+      );
+    } else {
+      PrintUtils.printWhite("wont navigate because from and to same.");
+    }
+  }
 }
