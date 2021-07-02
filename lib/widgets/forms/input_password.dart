@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/configs/colors.dart';
 
 class InputPassword extends StatefulWidget {
-  InputPassword({required this.onChanged, required this.label});
+  InputPassword(
+      {required this.onChanged, required this.label, this.isBottom = false});
 
   final Function onChanged;
   final String label;
+  final bool isBottom;
 
   @override
   _InputPasswordState createState() => _InputPasswordState();
@@ -20,13 +22,19 @@ class _InputPasswordState extends State<InputPassword> {
       ),
       child: TextField(
         obscureText: true,
-        style: TextStyle(height: 0.8, fontSize: 14.0, color: Colors.white),
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Theme.of(context).colorScheme.goldTheme,
+        ),
         decoration: InputDecoration(
           filled: true,
           border: OutlineInputBorder(
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
+            borderRadius: widget.isBottom
+                ? BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  )
+                : BorderRadius.circular(0),
             borderSide: BorderSide(
               width: 0,
               style: BorderStyle.none,

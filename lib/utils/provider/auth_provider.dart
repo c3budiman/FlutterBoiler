@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutterboiler/models/user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sembast/sembast.dart';
 
@@ -10,19 +9,23 @@ class AuthProvider extends ChangeNotifier {
   final _db = GetIt.I.get<Database>();
   final _store = StoreRef.main();
 
-  dynamic _userData;
+  UserModel? _userData;
 
   Future<void> init() async {
-    _userData = await _store.record('user_data').get(_db) ?? null;
+    final _tempDataUser = (await _store.record('user_data').get(_db));
+    _userData =
+        _tempDataUser != null ? UserModel.fromJson(_tempDataUser) : null;
   }
 
-  dynamic get userData => _userData != null ? jsonDecode(_userData) : null;
+  UserModel? get userData => _userData;
 
-  Future<void> setLoginData(String data) async {
-    _userData = data;
+  bool get isLogin => _userData != null;
+
+  Future<void> setLoginData(Map<String, dynamic> data) async {
+    _userData = UserModel.fromJson(data);
     await _store.record('user_data').put(
           _db,
-          data,
+          _userData!.toJson(),
         );
     notifyListeners();
   }

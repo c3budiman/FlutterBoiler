@@ -4,94 +4,50 @@ import 'package:flutterboiler/pages/login/logic/login_logic.dart';
 import 'package:flutterboiler/pages/login/screen/login_background.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutterboiler/configs/images.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutterboiler/utils/navigator_custom.dart';
 import 'package:flutterboiler/widgets/buttons/button_primary.dart';
-import 'package:flutterboiler/widgets/dialogs/error_dialog.dart';
-import 'package:flutterboiler/widgets/dialogs/success_dialog.dart';
 import 'package:flutterboiler/widgets/forms/input_email.dart';
 import 'package:flutterboiler/widgets/forms/input_password.dart';
+import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen();
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool loading = false;
-  String email = '';
-  String password = '';
-  bool error = false;
-  String pesanerror = 'Login Failed. Try Again';
-  List<int>? pattern;
-  bool berhasilLogin = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      LoginLogic.checkLogin(context);
-    });
-  }
+  String _email = '';
+  String _password = '';
 
   doLogin() async {
-    setState(
-      () {
-        loading = true;
-      },
-    );
-
-    var response = await LoginLogic.doLogin(
-      email: email,
-      password: password,
-    );
-
-    if (response['code'] == 0) {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return SuccessDialog(
-            message: response['info'],
-          );
-        },
-      ).then(
-        (value) async {
-          await NavigatorCustom.forwardNavigateReplacement(
-            context: context,
-            from: 'login',
-            to: 'home',
-          );
-        },
+    try {
+      context.showLoading();
+      var response = await LoginLogic.doLogin(
+        email: _email,
+        password: _password,
       );
-    } else {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return ErrorDialog(
-            message: response['info'],
-          );
-        },
-      );
-    }
+      context.hideDialog();
 
-    if (mounted) {
-      setState(
-        () {
-          loading = false;
-        },
-      );
+      if (response['code'] == 0) {
+        await context.showSuccess(response['info']);
+        context.pushReplacement(to: 'home');
+      } else {
+        context.showError(response['info']);
+      }
+    } catch (e) {
+      context.hideDialog();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.bluelogin,
+      backgroundColor: colorScheme.bluelogin,
       body: SingleChildScrollView(
         child: Container(
-          color: Theme.of(context).colorScheme.bluelogin,
+          color: colorScheme.bluelogin,
           child: Stack(
             children: [
               LoginBackground(),
@@ -108,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 bottom: 0,
                 child: Center(
                   child: Container(
-                    height: MediaQuery.of(context).size.height / 2 + 120,
-                    width: MediaQuery.of(context).size.width,
+                    height: deviceSize.height / 2 + 120,
+                    width: deviceSize.width,
                     child: Column(
                       children: [
                         SizedBox(
@@ -137,75 +93,52 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        Visibility(
-                          visible: !error,
-                          child: SizedBox(height: 40),
-                        ),
                         SizedBox(
                           height: 40,
                         ),
-                        Visibility(
-                          visible: loading,
-                          child: Column(
-                            children: [
-                              SpinKitFoldingCube(
-                                color: Colors.white,
-                                size: 70.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Visibility(
-                          visible: !loading,
-                          child: Column(
-                            children: [
-                              InputEmail(
-                                label: 'Email Address',
-                                onChanged: (text) {
-                                  print(text);
-                                  setState(() {
-                                    email = text;
-                                  });
-                                },
-                              ),
-                              InputPassword(
-                                label: 'Password',
-                                onChanged: (text) {
-                                  print(text);
-                                  setState(() {
-                                    password = text;
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              ButtonPrimary(
-                                label: "Login",
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.goldTheme,
-                                fontColor:
-                                    Theme.of(context).colorScheme.blueOldTheme,
-                                onTap: () {
-                                  doLogin();
-                                },
-                              ),
-                              ButtonPrimary(
-                                label: "Register",
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.blueOldTheme,
-                                fontColor:
-                                    Theme.of(context).colorScheme.goldTheme,
-                                onTap: () {
-                                  NavigatorCustom.forwardNavigate(
-                                    context: context,
-                                    from: 'login',
-                                    to: 'register',
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                        Column(
+                          children: [
+                            InputEmail(
+                              label: 'Email Address',
+                              onChanged: (text) {
+                                print(text);
+                                setState(() {
+                                  _email = text;
+                                });
+                              },
+                            ),
+                            InputPassword(
+                              label: 'Password',
+                              isBottom: true,
+                              onChanged: (text) {
+                                print(text);
+                                setState(() {
+                                  _password = text;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            ButtonPrimary(
+                              label: "Login",
+                              backgroundColor: colorScheme.goldTheme,
+                              fontColor: colorScheme.blueOldTheme,
+                              onTap: () {
+                                doLogin();
+                              },
+                            ),
+                            ButtonPrimary(
+                              label: "Register",
+                              backgroundColor: colorScheme.blueOldTheme,
+                              fontColor: colorScheme.goldTheme,
+                              onTap: () {
+                                context.push(
+                                  to: 'register',
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/Configs/Colors.dart';
+import 'package:flutterboiler/configs/colors.dart';
 
 class InputEmail extends StatefulWidget {
   InputEmail({required this.onChanged, required this.label});
@@ -18,9 +18,8 @@ class _InputEmailState extends State<InputEmail> {
       margin: EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
         style: TextStyle(
-          height: 0.8,
           fontSize: 14.0,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.goldTheme,
         ),
         decoration: InputDecoration(
           border: OutlineInputBorder(

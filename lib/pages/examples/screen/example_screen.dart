@@ -22,11 +22,7 @@ class _ExamplesScreenState extends State<ExamplesScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        await NavigatorCustom.forwardNavigate(
-          context: context,
-          from: 'example',
-          to: 'home',
-        );
+        await context.push(to: 'home');
         return false;
       },
       child: Scaffold(

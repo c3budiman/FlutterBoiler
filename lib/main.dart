@@ -31,6 +31,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: UIProvider.instance),
+        ChangeNotifierProvider.value(value: AuthProvider.instance),
       ],
       child: MyApp(),
     ),
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         canvasColor: Theme.of(context).colorScheme.whiteTheme,
       ),
-      initialRoute: "login",
+      initialRoute: "/",
       onGenerateRoute: generateRoutes,
     );
   }

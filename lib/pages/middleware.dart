@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutterboiler/configs/colors.dart';
-import 'package:flutterboiler/utils/print_utils.dart';
+import 'package:flutterboiler/utils/navigator_custom.dart';
+import 'package:flutterboiler/utils/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
-class MiddleWare extends StatefulWidget {
-  MiddleWare();
+class MiddlewareState<T extends StatefulWidget> extends State<T> {
+  @protected
+  bool get needAuth => true;
 
-  @override
-  _MiddleWareState createState() => _MiddleWareState();
-}
-
-class _MiddleWareState extends State<MiddleWare> {
-  @override
-  void initState() {
-    super.initState();
-    PrintUtils.printGreen("tes green");
-    PrintUtils.printMagenta("tes magenta");
-    PrintUtils.printWarning("tes yellow");
-    PrintUtils.printWhite("tes white");
-  }
-
+  @mustCallSuper
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.whiteTheme,
-      appBar: AppBar(
-        title: const Text('AppBar Demo'),
-        actions: <Widget>[],
-      ),
-    );
+    final navigator = Navigator.of(context);
+    final authProvider = context.watch<AuthProvider>();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      final currentRoute = ModalRoute.of(context);
+      if (needAuth && !authProvider.isLogin) {
+        if (currentRoute!.isFirst) {
+          context.pushReplacement(to: 'login');
+          return null;
+        }
+        if (!currentRoute.isCurrent)
+          navigator.removeRoute(currentRoute);
+        else
+          navigator.pop();
+      }
+    });
+
+    return Container();
   }
 }

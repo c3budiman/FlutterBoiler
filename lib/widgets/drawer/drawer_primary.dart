@@ -2,11 +2,10 @@ import 'package:flutterboiler/pages/login/logic/login_logic.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/configs/images.dart';
-import 'package:flutterboiler/utils/navigator_custom.dart';
 import 'package:flutterboiler/utils/print_utils.dart';
 import 'package:flutterboiler/utils/provider/auth_provider.dart';
-import 'package:flutterboiler/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutterboiler/widgets/drawer/widgets/drawer_items.dart';
+import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
 
 class DrawerPrimary extends StatefulWidget {
   DrawerPrimary();
@@ -106,29 +105,14 @@ class _DrawerPrimaryState extends State<DrawerPrimary> {
                     color: Theme.of(context).colorScheme.goldTheme,
                   ),
                   child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (_) {
-                          return ConfirmationDialog(
-                            message:
-                                "Are you sure you want to logout from the application?",
-                          );
-                        },
-                      ).then(
-                        (value) async {
-                          if (value) {
-                            await AuthProvider.instance.logOut();
-                            Navigator.pop(context);
-                            NavigatorCustom.forwardNavigateRemoveUntil(
-                              context: context,
-                              to: 'login',
-                              from: 'home',
-                            );
-                          }
-                        },
+                    onTap: () async {
+                      final value = await context.showConfirmation(
+                        "Are you sure you want to logout from the application?",
                       );
+                      if (value ?? false) {
+                        await AuthProvider.instance.logOut();
+                        Navigator.pop(context);
+                      }
                     },
                     child: Align(
                       alignment: Alignment.center,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/pages/examples/screen/example_screen.dart';
 import 'package:flutterboiler/pages/home/screen/home_screen.dart';
+import 'package:flutterboiler/pages/middleware.dart';
 import 'package:flutterboiler/pages/profile/screen/profile_screen.dart';
 import 'package:flutterboiler/configs/colors.dart';
+import 'package:flutterboiler/utils/provider/auth_provider.dart';
 import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +17,7 @@ class BottomNavBarPrimary extends StatefulWidget {
   BottomNavBarPrimaryState createState() => BottomNavBarPrimaryState();
 }
 
-class BottomNavBarPrimaryState extends State<BottomNavBarPrimary> {
+class BottomNavBarPrimaryState extends MiddlewareState<BottomNavBarPrimary> {
   PageController _pageController = PageController();
   int _currentIndex = 0;
 
@@ -27,7 +29,9 @@ class BottomNavBarPrimaryState extends State<BottomNavBarPrimary> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final uiProvider = context.watch<UIProvider>();
+    final authProvider = context.watch<AuthProvider>();
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
@@ -46,11 +50,16 @@ class BottomNavBarPrimaryState extends State<BottomNavBarPrimary> {
                     _currentIndex = index;
                   });
                 },
-                children: [
-                  HomeScreen(),
-                  ExamplesScreen(),
-                  ProfileScreen(),
-                ],
+                children: authProvider.userData?.role == 2
+                    ? [
+                        HomeScreen(),
+                        ExamplesScreen(),
+                        ProfileScreen(),
+                      ]
+                    : [
+                        HomeScreen(),
+                        ProfileScreen(),
+                      ],
               ),
             ),
 
@@ -63,12 +72,17 @@ class BottomNavBarPrimaryState extends State<BottomNavBarPrimary> {
                       child: SizedBox(
                         height: 60,
                         child: Row(
-                          children: [
-                            _buildIconButton(Icons.home, "Home", 0),
-                            _buildIconButton(
-                                Icons.airplane_ticket, "Examples", 1),
-                            _buildIconButton(Icons.person, "Profil", 2),
-                          ],
+                          children: authProvider.userData?.role == 2
+                              ? [
+                                  _buildIconButton(Icons.home, "Home", 0),
+                                  _buildIconButton(
+                                      Icons.airplane_ticket, "Examples", 1),
+                                  _buildIconButton(Icons.person, "Profil", 2),
+                                ]
+                              : [
+                                  _buildIconButton(Icons.home, "Home", 0),
+                                  _buildIconButton(Icons.person, "Profil", 1),
+                                ],
                         ),
                       ),
                     )
