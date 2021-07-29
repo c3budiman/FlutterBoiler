@@ -1,4 +1,4 @@
-# flutterboiler
+# Flutter Boiler
 
 [![CodeFactor](https://www.codefactor.io/repository/github/c3budiman/flutterboiler/badge)](https://www.codefactor.io/repository/github/c3budiman/flutterboiler)
 [![Build](https://github.com/c3budiman/FlutterBoiler/actions/workflows/testing.yml/badge.svg)](https://github.com/c3budiman/FlutterBoiler/actions/workflows/testing.yml)
@@ -15,6 +15,14 @@ A few resources to get you started:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Auto Update Depedencies
+- Install Pubspec Assist on Visual Studio Code
+- Press Command + Shift + P in pubspec.yaml file
+- Search for Add/Update depedencies then click it
+- Input the package name you want to add or update
+
+Example: ```awesome_notifications, connectivity, crypto, cupertino_icons, dio, email_validator, flutter_spinkit, get_it, local_auth, path_provider, percent_indicator, photo_view, pin_code_fields, provider, sembast, shimmer, web_socket_channel```
 
 ## Project Structure
 
@@ -43,7 +51,7 @@ samples, guidance on mobile development, and a full API reference.
 - Login & Register & Logout
 - Profile
 - Multiple Account / Home
-- Notification with websocket and local notification
+- Notification with Firebase and Local Notification
 - Local Auth (pin/pattern/face/fingerprint)
 - Offline Checker
 - Appbar Examples
