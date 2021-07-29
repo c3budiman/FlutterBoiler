@@ -24,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final auth = GetIt.I.get<LocalAuthentication>();
   String _email = '';
   String _password = '';
+  String _authorized = 'Not Authorized';
+  bool _isAuthenticating = false;
 
   doLogin() async {
     try {
@@ -164,18 +166,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   onPressed: () async {
+                                    bool authenticated = false;
                                     try {
-                                      await auth.authenticate(
+                                      setState(() {
+                                        _isAuthenticating = true;
+                                        _authorized = 'Authenticating';
+                                      });
+                                      authenticated = await auth.authenticate(
                                         localizedReason:
                                             "Please authenticate to show account balance",
                                         useErrorDialogs: true,
                                         stickyAuth: true,
                                         biometricOnly: false,
                                       );
-                                    } on PlatformException {
+                                      setState(() {
+                                        _isAuthenticating = false;
+                                      });
+                                    } on PlatformException catch (e) {
+                                      setState(() {
+                                        _isAuthenticating = false;
+                                        _authorized = "Error - ${e.message}";
+                                      });
                                       context.showError(
                                         'Please enable your security module',
                                       );
+
+                                      if (!mounted) return;
+
+                                      final String message = authenticated
+                                          ? 'Authorized'
+                                          : 'Not Authorized';
+                                      setState(() {
+                                        _authorized = message;
+                                      });
                                     }
                                   },
                                   child: Icon(Icons.lock),
