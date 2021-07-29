@@ -190,16 +190,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context.showError(
                                         'Please enable your security module',
                                       );
-
-                                      if (!mounted) return;
-
-                                      final String message = authenticated
-                                          ? 'Authorized'
-                                          : 'Not Authorized';
-                                      setState(() {
-                                        _authorized = message;
-                                      });
                                     }
+                                    if (!mounted) return;
+
+                                    final String message = authenticated
+                                        ? 'Authorized'
+                                        : 'Not Authorized';
+                                    setState(() {
+                                      _authorized = message;
+                                    });
                                   },
                                   child: Icon(Icons.lock),
                                 ),
