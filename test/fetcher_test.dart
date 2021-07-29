@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutterboiler/Utils/Fetcher.dart';
+import 'package:flutterboiler/utils/fetcher.dart';
 
 void main() {
   test(

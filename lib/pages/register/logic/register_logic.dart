@@ -1,5 +1,5 @@
-import 'package:flutterboiler/Configs/Urls.dart';
-import 'package:flutterboiler/Utils/Fetcher.dart';
+import 'package:flutterboiler/configs/urls.dart';
+import 'package:flutterboiler/utils/fetcher.dart';
 
 class RegisterLogic {
   static doRegister({
