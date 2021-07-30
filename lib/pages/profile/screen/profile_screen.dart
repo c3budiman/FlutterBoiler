@@ -11,7 +11,6 @@ import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
-import 'package:flutterboiler/utils/navigator_custom.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen();
