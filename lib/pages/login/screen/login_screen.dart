@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:flutterboiler/pages/login/logic/login_logic.dart';
 import 'package:flutterboiler/pages/login/screen/login_background.dart';
 import 'package:flutterboiler/configs/colors.dart';
@@ -11,8 +10,6 @@ import 'package:flutterboiler/widgets/buttons/button_primary.dart';
 import 'package:flutterboiler/widgets/forms/input_email.dart';
 import 'package:flutterboiler/widgets/forms/input_password.dart';
 import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
-import 'package:get_it/get_it.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,11 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final auth = GetIt.I.get<LocalAuthentication>();
   String _email = '';
   String _password = '';
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
 
   doLogin() async {
     try {
@@ -147,62 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               },
                             ),
-                            if (uiProvider.isDeviceSupport)
-                              ConstrainedBox(
-                                constraints: BoxConstraints.tightFor(
-                                  width: MediaQuery.of(context).size.width - 45,
-                                  height: 40,
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary:
-                                        Theme.of(context).colorScheme.goldTheme,
-                                    onPrimary: Theme.of(context)
-                                        .colorScheme
-                                        .blueOldTheme,
-                                    textStyle: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    bool authenticated = false;
-                                    try {
-                                      setState(() {
-                                        _isAuthenticating = true;
-                                        _authorized = 'Authenticating';
-                                      });
-                                      authenticated = await auth.authenticate(
-                                        localizedReason:
-                                            "Please authenticate to show account balance",
-                                        useErrorDialogs: true,
-                                        stickyAuth: true,
-                                        biometricOnly: false,
-                                      );
-                                      setState(() {
-                                        _isAuthenticating = false;
-                                      });
-                                    } on PlatformException catch (e) {
-                                      setState(() {
-                                        _isAuthenticating = false;
-                                        _authorized = "Error - ${e.message}";
-                                      });
-                                      context.showError(
-                                        'Please enable your security module',
-                                      );
-                                    }
-                                    if (!mounted) return;
-
-                                    final String message = authenticated
-                                        ? 'Authorized'
-                                        : 'Not Authorized';
-                                    setState(() {
-                                      _authorized = message;
-                                    });
-                                  },
-                                  child: Icon(Icons.lock),
-                                ),
-                              ),
                           ],
                         ),
                       ],
