@@ -5,12 +5,10 @@ import 'package:flutterboiler/pages/login/screen/login_background.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutterboiler/configs/images.dart';
 import 'package:flutterboiler/utils/navigator_custom.dart';
-import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:flutterboiler/widgets/buttons/button_primary.dart';
 import 'package:flutterboiler/widgets/forms/input_email.dart';
 import 'package:flutterboiler/widgets/forms/input_password.dart';
 import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -45,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final deviceSize = MediaQuery.of(context).size;
-    final uiProvider = context.watch<UIProvider>();
     return Scaffold(
       backgroundColor: colorScheme.bluelogin,
       body: SingleChildScrollView(

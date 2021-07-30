@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
+import 'package:flutterboiler/utils/navigator_custom.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen();
@@ -58,7 +59,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       if (response['code'] == 0) {
         await context.showSuccess(response['info']);
-        await fetchProfile();
       } else {
         context.showError(response['info']);
       }
