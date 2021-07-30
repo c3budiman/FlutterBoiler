@@ -29,10 +29,6 @@ class ProfileLogic {
       },
     );
 
-    if (response['code'] == 0) {
-      await AuthProvider.instance.setLoginData(data: response['data']);
-    }
-
     return response;
   }
 }

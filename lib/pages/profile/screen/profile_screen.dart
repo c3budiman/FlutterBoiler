@@ -58,6 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context.hideDialog();
 
       if (response['code'] == 0) {
+        await fetchProfile();
         await context.showSuccess(response['info']);
       } else {
         context.showError(response['info']);
