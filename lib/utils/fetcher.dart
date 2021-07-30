@@ -65,12 +65,15 @@ class Fetcher {
   static postData({
     var context,
     required String uri,
+    String? token,
     Map<String, dynamic>? params,
     bool silent = true,
   }) async {
     try {
       Response response;
       var dio = Dio();
+      if (token != null)
+        dio.options.headers.addAll(({"authorization": "Bearer $token"}));
       response = await dio.post(
         uri,
         data: params,
