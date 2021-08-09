@@ -64,3 +64,5 @@ Example: ```awesome_notifications, connectivity, crypto, cupertino_icons, dio, e
 
 - Add Updater and Maintenance page,
 - Add Feature develop mode, when tapped on logo 10 times. so base url, for api can have both development and production.
+- Add Notification with firebase
+- Add Upload image when register and profile edit

@@ -26,10 +26,11 @@ class LoginLogic {
       },
     );
 
-    print(response);
-
     if (response['code'] == 0) {
-      await AuthProvider.instance.setLoginData(response['data']);
+      await AuthProvider.instance.setLoginData(
+        data: response['data'],
+        token: response['token']['token'],
+      );
     }
 
     return response;

@@ -50,14 +50,14 @@ class BottomNavBarPrimaryState extends MiddlewareState<BottomNavBarPrimary> {
                     _currentIndex = index;
                   });
                 },
-                children: authProvider.userData?.role == 2
+                children: authProvider.userData?.role == 1
                     ? [
                         HomeScreen(),
-                        ExamplesScreen(),
                         ProfileScreen(),
                       ]
                     : [
                         HomeScreen(),
+                        ExamplesScreen(),
                         ProfileScreen(),
                       ],
               ),
@@ -72,16 +72,16 @@ class BottomNavBarPrimaryState extends MiddlewareState<BottomNavBarPrimary> {
                       child: SizedBox(
                         height: 60,
                         child: Row(
-                          children: authProvider.userData?.role == 2
+                          children: authProvider.userData?.role == 1
                               ? [
+                                  _buildIconButton(Icons.home, "Home", 0),
+                                  _buildIconButton(Icons.person, "Profil", 1),
+                                ]
+                              : [
                                   _buildIconButton(Icons.home, "Home", 0),
                                   _buildIconButton(
                                       Icons.airplane_ticket, "Examples", 1),
                                   _buildIconButton(Icons.person, "Profil", 2),
-                                ]
-                              : [
-                                  _buildIconButton(Icons.home, "Home", 0),
-                                  _buildIconButton(Icons.person, "Profil", 1),
                                 ],
                         ),
                       ),

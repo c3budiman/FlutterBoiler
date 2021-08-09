@@ -50,9 +50,10 @@ class _AppbarPrimaryState extends State<AppbarPrimary> {
 
   checkCon() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    setState(() {
-      connected = (connectivityResult != ConnectivityResult.none);
-    });
+    if (mounted)
+      setState(() {
+        connected = (connectivityResult != ConnectivityResult.none);
+      });
   }
 
   @override
