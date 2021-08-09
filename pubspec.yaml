@@ -30,6 +30,8 @@ dependencies:
   sembast: ^3.1.0+2
   shimmer: ^2.0.0
   web_socket_channel: ^2.1.0
+  image_cropper: ^1.4.1
+  image_picker: ^0.8.3+1
 
 dev_dependencies:
   flutter_test:
