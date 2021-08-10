@@ -62,6 +62,5 @@ Example: ```awesome_notifications, connectivity, crypto, cupertino_icons, dio, e
 
 ## Todo
 
-- Add Updater and Maintenance page,
-- Add Feature develop mode, when tapped on logo 10 times. so base url, for api can have both development and production.
+- Add Updater and Maintenance page
 - Add Notification with firebase

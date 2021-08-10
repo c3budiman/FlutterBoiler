@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutterboiler/pages/profile/logic/profile_logic.dart';
 import 'package:flutterboiler/utils/provider/auth_provider.dart';
+import 'package:flutterboiler/utils/provider/dev_provider.dart';
 import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:flutterboiler/widgets/appbar/appbar_primary.dart';
 import 'package:flutterboiler/widgets/drawer/drawer_primary.dart';
@@ -23,10 +24,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final auth = GetIt.I.get<LocalAuthentication>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController aboutMeController = TextEditingController();
+  TextEditingController emailController = TextEditingController(text: "");
+  TextEditingController aboutMeController = TextEditingController(text: "");
   List<String> roleList = ['Member', 'Admin'];
-  String? _role;
+  String? _role = 'Member';
   final picker = ImagePicker();
 
   ///Get image from Gallery
@@ -174,6 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
+    final devProvider = context.watch<DevProvider>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.whiteTheme,
       appBar: PreferredSize(
@@ -197,6 +199,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Visibility(
+                visible: devProvider.isDevMode,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Developer Mode",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.blueOldTheme,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
               Center(
                 child: avatarEdit(
                   authProvider.userData?.images ??

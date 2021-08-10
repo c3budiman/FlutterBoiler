@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutterboiler/routes.dart';
 import 'package:flutterboiler/utils/notification_utils.dart';
 import 'package:flutterboiler/utils/provider/auth_provider.dart';
+import 'package:flutterboiler/utils/provider/dev_provider.dart';
 import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
@@ -30,6 +31,7 @@ void main() async {
   final isDeviceSupport = await auth.isDeviceSupported();
 
   AuthProvider.instance.init();
+  DevProvider.instance.init();
   UIProvider.instance.isDeviceSupport = isDeviceSupport;
 
   runApp(
@@ -37,6 +39,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: UIProvider.instance),
         ChangeNotifierProvider.value(value: AuthProvider.instance),
+        ChangeNotifierProvider.value(value: DevProvider.instance),
       ],
       child: MyApp(),
     ),
