@@ -63,4 +63,3 @@ Example: ```awesome_notifications, connectivity, crypto, cupertino_icons, dio, e
 ## Todo
 
 - Add Updater and Maintenance page
-- Add Notification with firebase
