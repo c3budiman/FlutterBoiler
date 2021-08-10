@@ -58,7 +58,7 @@ Example: ```awesome_notifications, connectivity, crypto, cupertino_icons, dio, e
 - Bottom Navbar
 - Custom Dialog
 - Refresh On Scroll
-
+- Developer Mode When Tapping Icon 10 times
 
 ## Todo
 
