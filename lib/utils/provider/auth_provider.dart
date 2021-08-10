@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterboiler/models/user.dart';
 import 'package:get_it/get_it.dart';
@@ -25,6 +26,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> setLoginData({Map<String, dynamic>? data, String? token}) async {
     _userData = UserModel.fromJson(data!);
+    FirebaseMessaging.instance
+        .subscribeToTopic(_userData?.role.toString() ?? '0');
     await _store.record('user_data').put(
           _db,
           _userData!.toJson(),
@@ -37,6 +40,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logOut() async {
+    FirebaseMessaging.instance
+        .unsubscribeFromTopic(_userData?.role.toString() ?? '0');
     _userData = null;
     _token = null;
     await _store.records(['user_data', 'token']).delete(_db);

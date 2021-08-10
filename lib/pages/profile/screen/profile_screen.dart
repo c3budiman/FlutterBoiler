@@ -188,10 +188,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       endDrawer: DrawerPrimary(),
       onEndDrawerChanged: (val) {
-        if (val)
-          UIProvider.instance.navbarHide();
-        else
-          UIProvider.instance.navbarShow();
+        if (mounted) {
+          if (val)
+            UIProvider.instance.navbarHide();
+          else
+            UIProvider.instance.navbarShow();
+        }
       },
       body: SingleChildScrollView(
         child: Padding(

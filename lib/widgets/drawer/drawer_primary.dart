@@ -109,9 +109,12 @@ class _DrawerPrimaryState extends State<DrawerPrimary> {
                       final value = await context.showConfirmation(
                         "Are you sure you want to logout from the application?",
                       );
+                      Navigator.pop(context);
+                      context.showLoading();
                       if (value ?? false) {
-                        await AuthProvider.instance.logOut();
-                        Navigator.pop(context);
+                        Future.delayed(Duration(milliseconds: 1500), () {
+                          AuthProvider.instance.logOut();
+                        });
                       }
                     },
                     child: Align(

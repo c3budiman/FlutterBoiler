@@ -30,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _password,
       );
       context.hideDialog();
-
       if (response['code'] == 0) {
         await context.showSuccess(response['info']);
         context.pushReplacement(to: 'home');
@@ -40,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       context.hideDialog();
     }
+    if (mounted) setState(() {});
   }
 
   @override
