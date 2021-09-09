@@ -58,11 +58,8 @@ Example: ```awesome_notifications, connectivity, crypto, cupertino_icons, dio, e
 - Bottom Navbar
 - Custom Dialog
 - Refresh On Scroll
-
+- Developer Mode When Tapping Icon 10 times
 
 ## Todo
 
-- Add Updater and Maintenance page,
-- Add Feature develop mode, when tapped on logo 10 times. so base url, for api can have both development and production.
-- Add Notification with firebase
-- Add Upload image when register and profile edit
+- Add Updater and Maintenance page

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterboiler/widgets/dialogs/camera_choose_dialog.dart';
 import 'package:flutterboiler/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutterboiler/widgets/dialogs/error_dialog.dart';
 import 'package:flutterboiler/widgets/dialogs/loading_dialog.dart';
@@ -38,6 +39,14 @@ extension ExtensionDialog on BuildContext {
     return showDialog(
       context: this,
       builder: (_) => ConfirmationDialog(message: message),
+    );
+  }
+
+  ///Show Camera Choose
+  Future<bool?> showChooseCamera(String message) {
+    return showDialog(
+      context: this,
+      builder: (_) => CameraChooseDialog(message: message),
     );
   }
 }

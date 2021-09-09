@@ -37,10 +37,12 @@ class _ExamplesScreenState extends State<ExamplesScreen> {
         ),
         endDrawer: DrawerPrimary(),
         onEndDrawerChanged: (val) {
-          if (val)
-            UIProvider.instance.navbarHide();
-          else
-            UIProvider.instance.navbarShow();
+          if (mounted) {
+            if (val)
+              UIProvider.instance.navbarHide();
+            else
+              UIProvider.instance.navbarShow();
+          }
         },
       ),
     );

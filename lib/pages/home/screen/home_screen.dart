@@ -116,10 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       endDrawer: DrawerPrimary(),
       onEndDrawerChanged: (val) {
-        if (val)
-          UIProvider.instance.navbarHide();
-        else
-          UIProvider.instance.navbarShow();
+        if (mounted) {
+          if (val)
+            UIProvider.instance.navbarHide();
+          else
+            UIProvider.instance.navbarShow();
+        }
       },
       body: RefreshIndicator(
         onRefresh: () async {

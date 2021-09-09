@@ -4,10 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutterboiler/configs/colors.dart';
 import 'package:flutterboiler/pages/profile/logic/profile_logic.dart';
 import 'package:flutterboiler/utils/provider/auth_provider.dart';
+import 'package:flutterboiler/utils/provider/dev_provider.dart';
 import 'package:flutterboiler/utils/provider/ui_provider.dart';
 import 'package:flutterboiler/widgets/appbar/appbar_primary.dart';
 import 'package:flutterboiler/widgets/drawer/drawer_primary.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterboiler/widgets/dialogs/extension_dialog.dart';
@@ -21,10 +24,101 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final auth = GetIt.I.get<LocalAuthentication>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController aboutMeController = TextEditingController();
+  TextEditingController emailController = TextEditingController(text: "");
+  TextEditingController aboutMeController = TextEditingController(text: "");
   List<String> roleList = ['Member', 'Admin'];
-  String? _role;
+  String? _role = 'Member';
+  final picker = ImagePicker();
+
+  ///Get image from Gallery
+  Future getImageGallery() async {
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 100);
+    if (pickedFile == null) {
+      return;
+    }
+
+    final croppedFile = await ImageCropper.cropImage(
+      sourcePath: pickedFile.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+      ],
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Image',
+        toolbarColor: Theme.of(context).colorScheme.goldTheme,
+        toolbarWidgetColor: Theme.of(context).colorScheme.blueOldTheme,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: true,
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+        aspectRatioLockEnabled: true,
+      ),
+    );
+
+    if (croppedFile != null) {
+      context.showLoading();
+      try {
+        await ProfileLogic.editAvatar(
+          email: AuthProvider.instance.userData?.username ?? '',
+          imagePath: croppedFile.path,
+        );
+        fetchProfile();
+      } catch (e) {
+        final snackBar = SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(e is String ? e : 'Something went wrong'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      context.hideDialog();
+    }
+  }
+
+  ///Get image from Camera
+  Future getImageCamera() async {
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+    if (pickedFile == null) {
+      return;
+    }
+
+    final croppedFile = await ImageCropper.cropImage(
+      sourcePath: pickedFile.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+      ],
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Image',
+        toolbarColor: Theme.of(context).colorScheme.goldTheme,
+        toolbarWidgetColor: Theme.of(context).colorScheme.blueOldTheme,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: true,
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+        aspectRatioLockEnabled: true,
+      ),
+    );
+
+    if (croppedFile != null) {
+      context.showLoading();
+      try {
+        await ProfileLogic.editAvatar(
+          email: AuthProvider.instance.userData?.username ?? '',
+          imagePath: croppedFile.path,
+        );
+        fetchProfile();
+      } catch (e) {
+        final snackBar = SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(e is String ? e : 'Something went wrong'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      context.hideDialog();
+    }
+  }
 
   fetchProfile() async {
     await ProfileLogic.fetchProfile();
@@ -81,6 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
+    final devProvider = context.watch<DevProvider>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.whiteTheme,
       appBar: PreferredSize(
@@ -93,10 +188,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       endDrawer: DrawerPrimary(),
       onEndDrawerChanged: (val) {
-        if (val)
-          UIProvider.instance.navbarHide();
-        else
-          UIProvider.instance.navbarShow();
+        if (mounted) {
+          if (val)
+            UIProvider.instance.navbarHide();
+          else
+            UIProvider.instance.navbarShow();
+        }
       },
       body: SingleChildScrollView(
         child: Padding(
@@ -104,21 +201,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: CachedNetworkImage(
-                  imageUrl: authProvider.userData?.images ??
-                      'https://cdn4.iconfinder.com/data/icons/one-piece-anime/48/Sed-02-512.png',
-                  imageBuilder: (context, imageProvider) => Container(
-                    width: 120.0,
-                    height: 120.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
+              Visibility(
+                visible: devProvider.isDevMode,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Developer Mode",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.blueOldTheme,
                     ),
                   ),
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Center(
+                child: avatarEdit(
+                  authProvider.userData?.images ??
+                      'https://cdn4.iconfinder.com/data/icons/one-piece-anime/48/Sed-02-512.png',
                 ),
               ),
               SizedBox(
@@ -312,4 +415,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  Widget avatarEdit(String imageURL) => Material(
+        type: MaterialType.circle,
+        color: Colors.grey.withOpacity(0.8),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () async {
+            final value = await context.showChooseCamera(
+                'Choose where you want to pick your image from');
+            switch (value) {
+              case true:
+                getImageCamera();
+                break;
+              case false:
+                getImageGallery();
+                break;
+              default:
+            }
+          },
+          child: Container(
+            height: 140,
+            width: 140,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Positioned.fill(
+                  child: CachedNetworkImage(
+                    imageUrl: imageURL,
+                    fit: BoxFit.fitHeight,
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
+                      ),
+                    ),
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(4),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .blueOldTheme
+                        .withOpacity(0.8),
+                    child: Icon(
+                      Icons.camera_alt_outlined,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 }
